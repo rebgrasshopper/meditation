@@ -1,11 +1,9 @@
 import View from "./components/View/View";
-import Bird from "./components/Bird/Bird";
 
 function App() {
   return (
-    <div>
+    <div style={{overflow:"hidden"}}>
       <View />
-      <Bird />
     </div>
   );
 }

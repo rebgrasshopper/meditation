@@ -1,4 +1,6 @@
 import "./assets/style.css";
+import Bird from "../Bird/Bird";
+import Mouse from "../Mouse/Mouse";
 import { useEffect, useState } from "react";
 
 
@@ -59,6 +61,7 @@ function View() {
     return (
         <div id="container">
             <div id="leftEdge"></div>
+            <Mouse />
             <div id="rightEdge"></div>
         </div>
     )

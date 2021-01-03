@@ -6,14 +6,6 @@ function Bird() {
 
     const [ image, setImage ] = useState(Math.floor(Math.random() * birds.length));
 
-    function switchImages(){
-        if (image < birds.length){
-            setImage(image+1);
-        } else {
-            setImage(0);
-        }
-    }
-
     useEffect(()=>{
         setTimeout(function(){
             if (image < birds.length - 1){
