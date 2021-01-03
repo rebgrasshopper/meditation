@@ -1,0 +1,24 @@
+body {
+    background-image: url(./beach.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 50% 50%;
+    background-size: cover;
+}
+
+#leftEdge, #rightEdge {
+    height: 100vh;
+    width: 3px;
+    position: absolute;
+    background-color: rgb(252, 255, 70);
+    box-shadow: 0px 0px 30px 10px rgb(252, 255, 70);
+    display: none;
+}
+
+#leftEdge {
+    left: 0;
+}
+
+#rightEdge {
+    right: 0;
+}
