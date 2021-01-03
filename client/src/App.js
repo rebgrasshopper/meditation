@@ -1,8 +1,12 @@
 import View from "./components/View/View";
+import Bird from "./components/Bird/Bird";
 
 function App() {
   return (
-    <View />
+    <div>
+      <View />
+      <Bird />
+    </div>
   );
 }
 
