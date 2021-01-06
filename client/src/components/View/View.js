@@ -10,6 +10,7 @@ function View() {
         x: 50,
         y: 50
     });
+    const [ mice, setMice ] = useState([]);
     const body = document.getElementsByTagName('body')[0];
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,6 +47,14 @@ function View() {
         }
     }
 
+    const generateMouse = (event) =>{
+        event.preventDefault();
+        let randomNum = Math.floor(Math.random()*10000);
+        if (mice.indexOf(randomNum) < 0){
+            setMice(prevState => [...prevState, randomNum]);
+        }
+
+    }
     useEffect(() => {
         document.addEventListener("keydown", keyListen)
         return () => {
@@ -61,7 +70,10 @@ function View() {
     return (
         <div id="container">
             <div id="leftEdge"></div>
-            <Mouse backgroundXY = {backgroundXY}/>
+            {mice.map(mouse => <Mouse key={mouse} num={mouse} backgroundXY = {backgroundXY}/>)}
+            <button 
+            style={{position:"absolute", bottom:0+"px"}}
+            onClick={generateMouse}>Click for Mouse</button>
             <div id="rightEdge"></div>
         </div>
     )

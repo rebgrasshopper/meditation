@@ -1,26 +1,33 @@
 import mice from "./assets";
 import { useEffect, useState } from "react";
-let leftPosition = -100
-let mouseInterval;
+let leftPosition = {}
+let mouseIntervals = {};
 
-function Mouse({ backgroundXY }) {
+function Mouse({ backgroundXY, num }) {
 
+    if (leftPosition[num] === undefined){
+        leftPosition[num] = -100
+    }
     const [ image, setImage ] = useState(Math.floor(Math.random() * mice.length));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const keyListen = (event) => {
+    const numListen = (event) => {
         try {
-            if (event.key === "ArrowRight") {
+            if (event.num === "ArrowRight") {
                 if (backgroundXY.x < 100) {
-                    leftPosition = leftPosition - 2;
+                    for (const mouse in leftPosition){
+                        leftPosition[mouse] = leftPosition[mouse] - 2;
+                    }
                 }
-            } else if (event.key === "ArrowLeft") {
+            } else if (event.num === "ArrowLeft") {
                 if (backgroundXY.x > 0) {
-                    leftPosition = leftPosition + 1;
+                    for (const mouse in leftPosition){
+                        leftPosition[mouse] = leftPosition[mouse] + 1;
+                    }
                 }
             }
         } catch (e) {
-            console.log("Error from keyListen(Mouse.js):");
+            console.log("Error from numListen(Mouse.js):");
             console.log(e);
         }
     }
@@ -36,24 +43,35 @@ function Mouse({ backgroundXY }) {
     }, [image])
 
     useEffect(()=>{
-        mouseInterval = setInterval(function(){
-            console.log(leftPosition, "inside mouse movement");
-            if (leftPosition < 250){
-                leftPosition = leftPosition + 1;
-            } else {
-                document.getElementById("mouse").style.display = "none";
+        console.log("STARTING MOUSE NUM", num);
+        mouseIntervals[num] = setInterval(function(){
+            try {
+                console.log(leftPosition[num], "inside mouse movement");
+                if (leftPosition[num] < 50){
+                    console.log("MOUSE NUM", num);
+                    leftPosition[num] = leftPosition[num] + 1;
+                } else if (leftPosition[num] === undefined){
+                    leftPosition[num] = -100;
+                } else {
+                    console.log("TRYING TO DELETE MOUSE NUMBER", num);
+                    document.getElementById(num).style.display = "none";
+                    clearInterval(mouseIntervals[num]);
+                }
+            } catch (e) {
+                console.log("Error from mouseIntervals: ", num, "(Mouse.js)");
+                console.log(e);
             }
         }, 50)
     }, [])
 
     useEffect(() => {
-        document.addEventListener("keydown", keyListen)
+        document.addEventListener("numdown", numListen)
         return () => {
-            document.removeEventListener("keydown", keyListen);
+            document.removeEventListener("numdown", numListen);
         };
-    }, [keyListen]);
+    }, [numListen]);
 
-    return <img id="mouse" src={mice[image]} style={{
+    return <img id={num} src={mice[image]} style={{
         width: 100+"px",
         position:"absolute", 
         bottom: 100+ "px",
