@@ -61,7 +61,7 @@ function View() {
     return (
         <div id="container">
             <div id="leftEdge"></div>
-            <Mouse />
+            <Mouse backgroundXY = {backgroundXY}/>
             <div id="rightEdge"></div>
         </div>
     )

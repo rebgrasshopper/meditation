@@ -1,10 +1,29 @@
 import mice from "./assets";
 import { useEffect, useState } from "react";
+let leftPosition = -100
+let mouseInterval;
 
-function Mouse({ num }) {
+function Mouse({ backgroundXY }) {
 
     const [ image, setImage ] = useState(Math.floor(Math.random() * mice.length));
-    const [ leftPosition, setLeftPosition ] = useState(0);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const keyListen = (event) => {
+        try {
+            if (event.key === "ArrowRight") {
+                if (backgroundXY.x < 100) {
+                    leftPosition = leftPosition - 2;
+                }
+            } else if (event.key === "ArrowLeft") {
+                if (backgroundXY.x > 0) {
+                    leftPosition = leftPosition + 1;
+                }
+            }
+        } catch (e) {
+            console.log("Error from keyListen(Mouse.js):");
+            console.log(e);
+        }
+    }
 
     useEffect(()=>{
         setTimeout(function(){
@@ -17,15 +36,22 @@ function Mouse({ num }) {
     }, [image])
 
     useEffect(()=>{
-        setTimeout(function(){
-            console.log(leftPosition);
-            if (leftPosition < 100){
-                setLeftPosition(leftPosition+1);
+        mouseInterval = setInterval(function(){
+            console.log(leftPosition, "inside mouse movement");
+            if (leftPosition < 250){
+                leftPosition = leftPosition + 1;
             } else {
                 document.getElementById("mouse").style.display = "none";
             }
         }, 50)
-    }, [leftPosition])
+    }, [])
+
+    useEffect(() => {
+        document.addEventListener("keydown", keyListen)
+        return () => {
+            document.removeEventListener("keydown", keyListen);
+        };
+    }, [keyListen]);
 
     return <img id="mouse" src={mice[image]} style={{
         width: 100+"px",
