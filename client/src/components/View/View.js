@@ -63,7 +63,7 @@ function View() {
     }, [keyListen]);
 
     useEffect(() => {
-        console.log("inside backgroundXY useEffect", backgroundXY);
+        // console.log("inside backgroundXY useEffect", backgroundXY);
         body.style.backgroundPositionX = `${backgroundXY.x}%`;
     }, [backgroundXY])
 
