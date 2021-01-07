@@ -1,6 +1,7 @@
 import "./assets/style.css";
 import Bird from "../Bird/Bird";
 import Mouse from "../Mouse/Mouse";
+import Menu from "../Menu/Menu";
 import { useEffect, useState } from "react";
 
 
@@ -10,7 +11,7 @@ function View() {
         x: 50,
         y: 50
     });
-    const [ mice, setMice ] = useState([]);
+    const [mice, setMice] = useState([]);
     const body = document.getElementsByTagName('body')[0];
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,10 +48,9 @@ function View() {
         }
     }
 
-    const generateMouse = (event) =>{
-        event.preventDefault();
-        let randomNum = Math.floor(Math.random()*10000);
-        if (mice.indexOf(randomNum) < 0){
+    const generateMouse = (event) => {
+        let randomNum = Math.floor(Math.random() * 10000);
+        if (mice.indexOf(randomNum) < 0) {
             setMice(prevState => [...prevState, randomNum]);
         }
 
@@ -70,10 +70,8 @@ function View() {
     return (
         <div id="container">
             <div id="leftEdge"></div>
-            {mice.map(mouse => <Mouse key={mouse} num={mouse} backgroundXY = {backgroundXY}/>)}
-            <button 
-            style={{position:"absolute", bottom:0+"px"}}
-            onClick={generateMouse}>Click for Mouse</button>
+            {mice.map(mouse => <Mouse key={mouse} num={mouse} backgroundXY={backgroundXY} />)}
+            <Menu generateMouse={generateMouse}/>
             <div id="rightEdge"></div>
         </div>
     )
